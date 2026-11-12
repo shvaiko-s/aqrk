@@ -1,0 +1,8 @@
+cp_runs/
+cp_figures/
+.venv-cp/
+.venv/
+.cpvenv/
+
+.DS_Store
+*.egg-info/

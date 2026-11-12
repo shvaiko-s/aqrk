@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "source_notebook": "cp_tensor_experiments_normalized.ipynb",
+  "source_sha256": "1fe065ae8f923be5f359bce06734704cbe97ae24a8bcf2ed4165996c594b33a1",
+  "runner_sha256": "90c9328362bb06610d2664c34c2551191b5aae1cb04b6f7670bc166afda56cbb",
+  "settings_overrides": {
+    "trials": 10,
+    "query_update_variants": [
+      "fresh"
+    ]
+  },
+  "group": "filtered",
+  "numpy_version": "1.23.5",
+  "workers": 4,
+  "started_utc": "2026-11-12T06:15:18.297641+00:00",
+  "execution": "independent trials; paired initializations and fixed random seeds",
+  "settings_sha256": "7f2108ec2ee3d2ce617e983083474113732109c953db658ee240d236a07dc6c1",
+  "inputs_sha256": "8789813ddabc6a7357c7e858c2482afd847f98ed3ae9c3de40cd14e8193fd8eb",
+  "expected_trials": 190,
+  "completed_trials": 190,
+  "latest_completion_utc": "2026-11-12T08:35:11.882609+00:00",
+  "finished_utc": "2026-11-12T08:35:12.955808+00:00",
+  "wall_seconds_this_invocation": 4645.309601833,
+  "original_sources": {
+    "filtered": {
+      "source_sha256": "1fe065ae8f923be5f359bce06734704cbe97ae24a8bcf2ed4165996c594b33a1",
+      "runner_sha256": "90c9328362bb06610d2664c34c2551191b5aae1cb04b6f7670bc166afda56cbb"
+    }
+  },
+  "archive_kind": "compact",
+  "archive_source": "/Users/sofiiashvaiko/Documents/averaged_qrk/src/experiments/cp/generated_runs/paper",
+  "archived_files": [
+    "histories.npz",
+    "inputs.npz",
+    "settings.json",
+    "summary.json"
+  ]
+}

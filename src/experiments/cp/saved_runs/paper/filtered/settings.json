@@ -1,0 +1,52 @@
+{
+  "shape": [
+    30,
+    30,
+    30
+  ],
+  "rank": 5,
+  "trials": 10,
+  "paired_initializations": true,
+  "batch_sizes": [
+    1,
+    5,
+    10,
+    50
+  ],
+  "q": 0.85,
+  "alpha": 1.0,
+  "outer_sweeps": {
+    "exact": 120,
+    "approximate": 60,
+    "query_noise": 120
+  },
+  "adaptive_stopping": true,
+  "inner_iterations": 500,
+  "min_inner_iterations": 40,
+  "window": 20,
+  "plateau_patience": 2,
+  "plateau_tolerance": 0.001,
+  "residual_tolerance": 1e-12,
+  "dense_noise_relative_level": 0.02,
+  "corruption_fraction": 0.1,
+  "replacement_scale": 2.0,
+  "replacement_quantile": 0.9,
+  "als_ridge": 1e-08,
+  "true_seed": 0,
+  "initialization_seed": 1,
+  "dense_noise_seed": 7,
+  "corruption_seed": 42,
+  "query_noise_relative_std": 0.05,
+  "first_query_seed": 70124,
+  "als_query_noise_seed": 70042,
+  "experiment_version": "cp_unit_rows_query_noise_v3",
+  "quantile_method": "linear",
+  "inner_row_normalization": "matrix_and_rhs_once_per_mode",
+  "filtering_residuals": "row_normalized",
+  "stopping_residuals": "row_normalized",
+  "quantile_ties": "retain",
+  "first_sampling_seed": 124,
+  "query_update_variants": [
+    "fresh"
+  ]
+}

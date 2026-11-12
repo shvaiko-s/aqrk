@@ -1,0 +1,15 @@
+{
+  "sha256": {
+    "filtered/histories.npz": "84f185728eb945138a16f3e61e9587a6eb69edc50199e9bad5f115455518519c",
+    "filtered/inputs.npz": "8789813ddabc6a7357c7e858c2482afd847f98ed3ae9c3de40cd14e8193fd8eb",
+    "filtered/provenance.json": "381b594290ecced43d9292c5ca0b2bc086f36af861e207992eb27c955ddc6182",
+    "filtered/settings.json": "7f2108ec2ee3d2ce617e983083474113732109c953db658ee240d236a07dc6c1",
+    "filtered/summary.json": "04dd5d68eaf96424506d0476e58d56f6f0602bcf725e9649996699e60af5bb6d",
+    "original_sources.zip": "103d8d6f9a83ebf12222364d6b285fa76229e555272296b54d07f7f746967d99",
+    "unfiltered/histories.npz": "efb9e4027033d424db184673a1494702634b0d0e633a1832e33d03a0a119fba1",
+    "unfiltered/inputs.npz": "8789813ddabc6a7357c7e858c2482afd847f98ed3ae9c3de40cd14e8193fd8eb",
+    "unfiltered/provenance.json": "3b9e10589935fa951fe9aa0c03298393fd295ad78ff90e3122cf981af35bd0dd",
+    "unfiltered/settings.json": "96638d50f6d7c9b69fc93a2011771e08cfa0f7d4adb00b694d50e90a18f6aa6b",
+    "unfiltered/summary.json": "bd6fbad0f909e16c2a7785e3f352ae94843261a75100151e300d9ba0be3b5572"
+  }
+}
