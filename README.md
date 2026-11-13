@@ -43,7 +43,10 @@ python src/experiments/synthetic_and_tomo/generate_all_figures_style_consistency
 
 The script reads the saved archives in `src/experiments/synthetic_and_tomo/results/`
 and writes the PDFs to the [paper figures folder](src/experiments/synthetic_and_tomo/paper/figures_style_consistency_median/).
-Replotting skips the solvers and replaces any PDFs with the same names.
+The plotted curves are medians across trials, with pointwise 25th–75th
+percentile bands. These bands are interquartile ranges, not confidence
+intervals. Replotting skips the solvers and replaces any PDFs with the same
+names.
 
 ### Rerun the experiments
 

@@ -1,7 +1,7 @@
 """Regenerate all saved experiment figures with a consistent publication style.
 
 This script serves as the canonical way to rebuild the project figures with a
-consistent publication style while preserving the same trimmed uncertainty bands.
+consistent publication style and interquartile uncertainty bands.
 """
 
 from __future__ import annotations
@@ -126,6 +126,14 @@ def format_scheduled_axes(ax: plt.Axes) -> None:
 def format_log_x_axis(ax: plt.Axes) -> None:
     ax.xaxis.set_major_formatter(LogFormatterMathtext(base=10))
     ax.yaxis.set_major_formatter(LogFormatterMathtext(base=10))
+
+
+def percentile_bounds(curves: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Return the pointwise 25th and 75th percentiles of trial curves."""
+    curves = np.asarray(curves)
+    if curves.ndim < 2:
+        raise ValueError("At least two dimensions are required for trial curves")
+    return tuple(np.percentile(curves, [25, 75], axis=0))
 
 
 def least_squares_median(l2_value: float | dict | None) -> float | None:
@@ -279,9 +287,9 @@ def generate_scheduled_aqrk_figures(
         return s0 * 2 ** (np.arange(length) // period)
 
     def curves_for_stat(curves: np.ndarray) -> tuple[np.ndarray, ...]:
-        sorted_curves = np.sort(curves, axis=0)
         central = np.median(curves, axis=0)
-        return central, sorted_curves[2], sorted_curves[-3]
+        lower, upper = percentile_bounds(curves)
+        return central, lower, upper
 
     iteration_fig, iteration_ax = plt.subplots(figsize=(7, 5))
     budget_fig, budget_ax = plt.subplots(figsize=(7, 5))
@@ -372,6 +380,14 @@ def load_summary_archive(
         raise FileNotFoundError(f"Missing archive: {archive}")
     data = np.load(archive, allow_pickle=True)
     summary = data["summary_results"].item()
+    raw_results = data["raw_results"].item()
+    for case_name, case_summary in summary.items():
+        for method_name, method_summary in case_summary.items():
+            lower_bound, upper_bound = percentile_bounds(
+                raw_results[case_name][method_name]
+            )
+            method_summary["lower_bound"] = lower_bound
+            method_summary["upper_bound"] = upper_bound
     l2_errors = data["l2_errors"].item() if "l2_errors" in data else {}
     missing = [
         f"{case}:{method}"
@@ -683,6 +699,7 @@ def generate_sweep_figures(output_dir: Path) -> None:
     if s_archive.exists():
         s_data = np.load(s_archive, allow_pickle=True)
         s_summary = s_data["summary_results"].item()
+        s_raw_results = s_data["raw_results"].item()
         s_values = list(s_data["s_values"].astype(int))
 
         # A 6000-update run records the errors of iterates 0 through 5999.
@@ -703,8 +720,7 @@ def generate_sweep_figures(output_dir: Path) -> None:
             for idx, s in enumerate(s_values):
                 summary = s_summary[s]
                 median = np.asarray(summary["median"])
-                lower = np.asarray(summary["lower_bound"])
-                upper = np.asarray(summary["upper_bound"])
+                lower, upper = percentile_bounds(s_raw_results[s])
                 color = METHOD_COLORS["QABK"] if idx == 0 else [
                     "#0072B2",
                     "#E69F00",
@@ -814,6 +830,7 @@ def generate_sweep_figures(output_dir: Path) -> None:
     if separation.exists():
         sep_data = np.load(separation, allow_pickle=True)
         summary = sep_data["summary_results"].item()
+        raw_results = sep_data["raw_results"].item()
         uniform_levels = sep_data["uniform_levels"].tolist()
         adversarial_levels = sep_data["adversarial_levels"].tolist()
         f_scale = float(sep_data["f_scale"])
@@ -832,8 +849,7 @@ def generate_sweep_figures(output_dir: Path) -> None:
         for idx, level in enumerate(uniform_levels):
             level_summary = summary["uniform"][level]
             median = np.asarray(level_summary["median"])
-            lower = np.asarray(level_summary["lower_bound"])
-            upper = np.asarray(level_summary["upper_bound"])
+            lower, upper = percentile_bounds(raw_results["uniform"][level])
             uniform_ax.plot(
                 median,
                 color=palette[idx % len(palette)],
@@ -873,8 +889,9 @@ def generate_sweep_figures(output_dir: Path) -> None:
         for idx, level in enumerate(adversarial_levels):
             level_summary = summary["adversarial"][level]
             median = np.asarray(level_summary["median"])
-            lower = np.asarray(level_summary["lower_bound"])
-            upper = np.asarray(level_summary["upper_bound"])
+            lower, upper = percentile_bounds(
+                raw_results["adversarial"][level]
+            )
             adversarial_ax.plot(
                 median,
                 color=palette[idx % len(palette)],
@@ -920,8 +937,9 @@ def generate_sweep_figures(output_dir: Path) -> None:
             for idx, level in enumerate(levels):
                 level_summary = summary[case_name][level]
                 median = np.asarray(level_summary["median"])
-                lower = np.asarray(level_summary["lower_bound"])
-                upper = np.asarray(level_summary["upper_bound"])
+                lower, upper = percentile_bounds(
+                    raw_results[case_name][level]
+                )
                 if case_name == "uniform":
                     median = median[:6000]
                     lower = lower[:6000]
